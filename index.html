@@ -172,6 +172,32 @@
             50% { transform: translateY(-10px); }
             100% { transform: translateY(0px); }
         }
+
+        #imageModal {
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        #modalImage {
+            animation: zoomIn 0.3s ease-out;
+        }
+        
+        @keyframes zoomIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        #imageModal {
+            z-index: 9999 !important;
+        }
+        
+        body.modal-open {
+            overflow: hidden;
+        }
     </style>
 </head>
 <body class="gradient-bg">
@@ -265,8 +291,8 @@
                     
                     <div class="absolute -top-4 -right-4 glass-card rounded-lg p-4 shadow-lg">
                         <div class="text-center">
-                            <div class="text-2xl font-bold gradient-text">9.07</div>
-                            <div class="text-sm text-gray-400"></div>
+                            <div class="text-2xl font-bold gradient-text">9.00</div>
+                            <div class="text-sm text-gray-400">CGPA</div>
                         </div>
                     </div>
                     
@@ -323,7 +349,7 @@
                     </div>
                     <div class="text-gray-400">
                         <p class="mb-2">Java || Python || SQL || HTML5 || CSS3</p>
-                        <p>JavaScript || Figma || OpenCV || ML || Data Science</p>
+                        <p>JavaScript || Figma || OpenCV || ML</p>
                     </div>
                 </div>
             </div>
@@ -721,8 +747,34 @@
                 </p>
             </div>
             
-            <div class="relative">
+            <div id="imageModal" class="fixed inset-0 bg-black/95 z-[100] hidden items-center justify-center p-4 backdrop-blur-sm">
+                <div class="relative w-full h-full flex items-center justify-center">
+                    <button id="closeModal" class="absolute top-6 right-6 z-10 text-white text-2xl hover:text-blue-400 transition duration-300 bg-black/50 p-3 rounded-full w-12 h-12 flex items-center justify-center">
+                        <i class="fas fa-times"></i>
+                    </button>
 
+                    <button id="prevBtn" class="absolute left-6 top-1/2 transform -translate-y-1/2 z-10 text-white text-3xl hover:text-blue-400 transition duration-300 bg-black/50 p-3 rounded-full w-12 h-12 flex items-center justify-center">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button id="nextBtn" class="absolute right-6 top-1/2 transform -translate-y-1/2 z-10 text-white text-3xl hover:text-blue-400 transition duration-300 bg-black/50 p-3 rounded-full w-12 h-12 flex items-center justify-center">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+
+                    <div class="max-w-7xl w-full max-h-[90vh] flex flex-col items-center justify-center p-4">
+                        <div class="relative w-full h-[70vh] flex items-center justify-center">
+                            <img id="modalImage" class="max-w-full max-h-full w-auto h-auto object-contain rounded-lg shadow-2xl" alt="Modal Image">
+                        </div>
+                        
+                        <div id="modalCaption" class="text-white text-center mt-6 text-xl font-medium max-w-3xl px-4"></div>
+                        
+                        <div id="imageCounter" class="text-gray-400 text-center mt-4 text-sm">
+                            <span id="currentIndex">1</span> / <span id="totalImages">3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="relative">
                 <div class="timeline-line hidden md:block"></div>
                 
                 <div class="space-y-12">
@@ -739,16 +791,48 @@
                                 <p class="text-gray-400 mb-4">VIT Bhopal University</p>
                                 <p class="text-gray-300">
                                     Focus on Full Stack Development and Software Architecture.<br>
-                                    Associated with Data Science Club, & keen interest in Research paper writing activites <br> 
+                                    Associated with Data Science Club, & keen interest in research paper writing activites <br> 
                                     Current CGPA: 9.07/10.00
                                 </p>
                             </div>
                         </div>
                         
-                        <div class="md:w-1/2 md:pl-12">
-                            <div class="hidden md:block">
-                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center mx-auto">
-                                    <i class="fas fa-graduation-cap text-white"></i>
+                        <div class="md:w-1/2 md:pl-12 mt-8 md:mt-0">
+                            <div class="relative h-64 md:h-80">
+                                <div class="absolute top-0 right-1/4 transform rotate-3 w-48 h-48 md:w-56 md:h-56 overflow-hidden rounded-lg shadow-2xl border-2 border-blue-500/30 hover:rotate-0 transition-transform duration-500 hover:scale-105 z-10 cursor-pointer modal-trigger"
+                                     data-index="0"
+                                     data-group="vit"
+                                     data-src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
+                                     data-caption="VIT Bhopal University Campus - Main Building">
+                                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="VIT Bhopal Campus" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-blue-900/40 to-transparent"></div>
+                                    <div class="absolute bottom-2 right-2 p-1 bg-black/50 rounded-full">
+                                        <i class="fas fa-expand text-white text-sm"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="absolute bottom-0 left-1/4 transform -rotate-6 w-40 h-40 md:w-48 md:h-48 overflow-hidden rounded-lg shadow-2xl border-2 border-purple-500/30 hover:rotate-0 transition-transform duration-500 hover:scale-105 z-20 cursor-pointer modal-trigger"
+                                     data-index="1"
+                                     data-group="vit"
+                                     data-src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
+                                     data-caption="University Library & Learning Center">
+                                    <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="University Library" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-purple-900/40 to-transparent"></div>
+                                    <div class="absolute bottom-2 right-2 p-1 bg-black/50 rounded-full">
+                                        <i class="fas fa-expand text-white text-sm"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="absolute top-1/2 left-0 transform rotate-12 w-32 h-32 md:w-40 md:h-40 overflow-hidden rounded-lg shadow-2xl border-2 border-green-500/30 hover:rotate-0 transition-transform duration-500 hover:scale-105 z-0 cursor-pointer modal-trigger"
+                                     data-index="2"
+                                     data-group="vit"
+                                     data-src="https://images.unsplash.com/photo-1524178234883-043d5c3f3cf4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
+                                     data-caption="Computer Science Lab - Technology Hub">
+                                    <img src="https://images.unsplash.com/photo-1524178234883-043d5c3f3cf4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Tech Lab" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-green-900/40 to-transparent"></div>
+                                    <div class="absolute bottom-2 right-2 p-1 bg-black/50 rounded-full">
+                                        <i class="fas fa-expand text-white text-sm"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -756,9 +840,41 @@
 
                     <div class="flex flex-col md:flex-row items-center">
                         <div class="md:w-1/2 md:pr-12 mb-6 md:mb-0 md:text-right order-2 md:order-1">
-                            <div class="hidden md:block">
-                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center mx-auto">
-                                    <i class="fas fa-school text-white"></i>
+                            <div class="relative h-64 md:h-80">                
+                                <div class="absolute top-0 left-1/4 transform -rotate-3 w-100% h-100% md:w-81 md:h-56 overflow-hidden rounded-lg shadow-2xl border-2 border-purple-500/30 hover:rotate-0 transition-transform duration-500 hover:scale-105 z-10 cursor-pointer modal-trigger"
+                                     data-index="0"
+                                     data-group="birla12"
+                                     data-src="class12_img1.jpeg"
+                                     data-caption="Our Class - XII Science C">
+                                    <img src="class12_img1.jpeg" alt="Birla High School" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-purple-900/40 to-transparent"></div>
+                                    <div class="absolute bottom-2 right-2 p-1 bg-black/50 rounded-full">
+                                        <i class="fas fa-expand text-white text-sm"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="absolute bottom-0 right-1/4 transform rotate-6 w-40 h-40 md:w-48 md:h-48 overflow-hidden rounded-lg shadow-2xl border-2 border-pink-500/30 hover:rotate-0 transition-transform duration-500 hover:scale-105 z-40 cursor-pointer modal-trigger"
+                                     data-index="1"
+                                     data-group="birla12"
+                                     data-src="class12_img2.jpeg"
+                                     data-caption="Class 12 Classroom - Science Stream">
+                                    <img src="class12_img2.jpeg" alt="Classroom" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-pink-900/40 to-transparent"></div>
+                                    <div class="absolute bottom-2 right-2 p-1 bg-black/50 rounded-full">
+                                        <i class="fas fa-expand text-white text-sm"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="absolute top-1/2 right-0 transform -rotate-12 w-32 h-32 md:w-40 md:h-40 overflow-hidden rounded-lg shadow-2xl border-2 border-yellow-500/30 hover:rotate-0 transition-transform duration-500 hover:scale-105 z-30 cursor-pointer modal-trigger"
+                                     data-index="2"
+                                     data-group="birla12"
+                                     data-src="class12_img3.jpeg"
+                                     data-caption="Farewell Party - Group Memories">
+                                    <img src="class12_img3.jpeg" alt="Science Lab" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-yellow-900/40 to-transparent"></div>
+                                    <div class="absolute bottom-2 right-2 p-1 bg-black/50 rounded-full">
+                                        <i class="fas fa-expand text-white text-sm"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -797,11 +913,43 @@
                                 </p>
                             </div>
                         </div>
-                        
-                        <div class="md:w-1/2 md:pl-12">
-                            <div class="hidden md:block">
-                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-green-500 to-teal-600 flex items-center justify-center mx-auto">
-                                    <i class="fas fa-award text-white"></i>
+
+                        <div class="md:w-1/2 md:pl-12 mt-8 md:mt-0">
+                            <div class="relative h-64 md:h-80">
+                                <div class="absolute top-0 right-1/4 transform rotate-3 w-48 h-48 md:w-56 md:h-56 overflow-hidden rounded-lg shadow-2xl border-2 border-green-500/30 hover:rotate-0 transition-transform duration-500 hover:scale-105 z-10 cursor-pointer modal-trigger"
+                                     data-index="0"
+                                     data-group="birla10"
+                                     data-src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
+                                     data-caption="Birla High School - School Campus Ground">
+                                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="School Campus" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-green-900/40 to-transparent"></div>
+                                    <div class="absolute bottom-2 right-2 p-1 bg-black/50 rounded-full">
+                                        <i class="fas fa-expand text-white text-sm"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="absolute bottom-0 left-1/4 transform -rotate-6 w-40 h-40 md:w-48 md:h-48 overflow-hidden rounded-lg shadow-2xl border-2 border-teal-500/30 hover:rotate-0 transition-transform duration-500 hover:scale-105 z-20 cursor-pointer modal-trigger"
+                                     data-index="1"
+                                     data-group="birla10"
+                                     data-src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
+                                     data-caption="School Activities & Cultural Programs">
+                                    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="School Activities" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-teal-900/40 to-transparent"></div>
+                                    <div class="absolute bottom-2 right-2 p-1 bg-black/50 rounded-full">
+                                        <i class="fas fa-expand text-white text-sm"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="absolute top-1/2 left-0 transform rotate-12 w-32 h-32 md:w-40 md:h-40 overflow-hidden rounded-lg shadow-2xl border-2 border-emerald-500/30 hover:rotate-0 transition-transform duration-500 hover:scale-105 z-0 cursor-pointer modal-trigger"
+                                     data-index="2"
+                                     data-group="birla10"
+                                     data-src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
+                                     data-caption="Sports Field - Interhouse Football Tournaments">
+                                    <img src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Sports Field" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/40 to-transparent"></div>
+                                    <div class="absolute bottom-2 right-2 p-1 bg-black/50 rounded-full">
+                                        <i class="fas fa-expand text-white text-sm"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1109,7 +1257,7 @@
                             <div>
                                 <h4 class="text-white font-medium mb-1">Phone</h4>
                                 <a href="tel:+916291871392" class="text-gray-400 hover:text-purple-400 transition duration-300">
-                                    +91 62918-71392 || +91 76030-45713
+                                    +91 62918-71392 || +91 7603045713
                                 </a>
                             </div>
                         </div>
@@ -1349,28 +1497,144 @@
             });
         }
     </script>
+    <script>
+        const imageModal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalCaption = document.getElementById('modalCaption');
+        const closeModal = document.getElementById('closeModal');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const currentIndexSpan = document.getElementById('currentIndex');
+        const totalImagesSpan = document.getElementById('totalImages');
+        
+        let currentGroup = '';
+        let currentIndex = 0;
+        let allImages = [];
+        const modalTriggers = document.querySelectorAll('.modal-trigger');
+        
+        const imageGroups = {};
+        modalTriggers.forEach(trigger => {
+            const group = trigger.dataset.group;
+            if (!imageGroups[group]) {
+                imageGroups[group] = [];
+            }
+            imageGroups[group].push(trigger);
+        });
+        console.log('Image groups:', imageGroups);
+        
+        modalTriggers.forEach(trigger => {
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const src = trigger.dataset.src;
+                const caption = trigger.dataset.caption;
+                const group = trigger.dataset.group;
+                const index = parseInt(trigger.dataset.index);
+                
+                console.log('Opening modal:', { src, caption, group, index });
+                
+                currentGroup = group;
+                currentIndex = index;
+                allImages = imageGroups[group];
+                
+                const img = new Image();
+                img.onload = function() {
+                    modalImage.src = src;
+                    modalCaption.textContent = caption;
+                    currentIndexSpan.textContent = index + 1;
+                    totalImagesSpan.textContent = allImages.length;
+                    imageModal.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+
+                    updateNavigationButtons();
+                };
+                img.src = src;
+            });
+        });
+
+        closeModal.addEventListener('click', () => {
+            closeImageModal();
+        });
+
+        imageModal.addEventListener('click', (e) => {
+            if (e.target === imageModal || e.target.classList.contains('modal-bg')) {
+                closeImageModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !imageModal.classList.contains('hidden')) {
+                closeImageModal();
+            }
+        });
+
+        function updateNavigationButtons() {
+            if (allImages.length <= 1) {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+            } else {
+                prevBtn.style.display = 'flex';
+                nextBtn.style.display = 'flex';
+            }
+        }
+        
+        function showNextImage() {
+            if (allImages.length === 0) return;
+            
+            currentIndex = (currentIndex + 1) % allImages.length;
+            const nextImage = allImages[currentIndex];
+            
+            modalImage.style.opacity = '0.5';
+            setTimeout(() => {
+                modalImage.src = nextImage.dataset.src;
+                modalCaption.textContent = nextImage.dataset.caption;
+                currentIndexSpan.textContent = currentIndex + 1;
+                modalImage.style.opacity = '1';
+            }, 150);
+        }
+        
+        function showPrevImage() {
+            if (allImages.length === 0) return;
+            
+            currentIndex = (currentIndex - 1 + allImages.length) % allImages.length;
+            const prevImage = allImages[currentIndex];
+            
+            modalImage.style.opacity = '0.5';
+            setTimeout(() => {
+                modalImage.src = prevImage.dataset.src;
+                modalCaption.textContent = prevImage.dataset.caption;
+                currentIndexSpan.textContent = currentIndex + 1;
+                modalImage.style.opacity = '1';
+            }, 150);
+        }
+        
+        prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showPrevImage();
+        });
+        
+        nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showNextImage();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!imageModal.classList.contains('hidden')) {
+                if (e.key === 'ArrowLeft') {
+                    showPrevImage();
+                } else if (e.key === 'ArrowRight') {
+                    showNextImage();
+                }
+            }
+        });
+        
+        function closeImageModal() {
+            imageModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            modalImage.style.opacity = '1';
+        }
+
+        modalImage.style.transition = 'opacity 0.3s ease';
+        imageModal.classList.add('modal-bg');
+    </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
